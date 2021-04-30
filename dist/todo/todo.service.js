@@ -14,51 +14,33 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TodoService = void 0;
 const common_1 = require("@nestjs/common");
-const mongoose_1 = require("mongoose");
-const mongoose_2 = require("@nestjs/mongoose");
-const todo_transformer_1 = require("./transformers/todo.transformer");
+const mongoose_1 = require("@nestjs/mongoose");
+const mongoose_2 = require("mongoose");
+const todo_schema_1 = require("./schemas/todo.schema");
 let TodoService = class TodoService {
-    constructor(TodoModel) {
-        this.TodoModel = TodoModel;
-    }
-    async create(createTodoDto) {
-        let data = new this.TodoModel(createTodoDto);
-        return todo_transformer_1.TodoTransformer.singleTransform(await data.save());
+    constructor(model) {
+        this.model = model;
     }
     async findAll() {
-        let data = await this.TodoModel.find();
-        if (data.length < 1) {
-            return [];
-        }
-        return todo_transformer_1.TodoTransformer.transform(data);
+        return await this.model.find().exec();
     }
     async findOne(id) {
-        console.log(id);
-        let data = await this.TodoModel.findById(id);
-        if (!data) {
-            throw new Error('Data not found!');
-        }
-        return todo_transformer_1.TodoTransformer.singleTransform(data);
+        return await this.model.findById(id).exec();
+    }
+    async create(createTodoDto) {
+        return await new this.model(Object.assign(Object.assign({}, createTodoDto), { createdAt: new Date() })).save();
     }
     async update(id, updateTodoDto) {
-        let data = await this.TodoModel.findByIdAndUpdate(id, updateTodoDto, { 'new': true });
-        if (!data) {
-            throw new Error("Todo is not found!");
-        }
-        return todo_transformer_1.TodoTransformer.singleTransform(data);
+        return await this.model.findByIdAndUpdate(id, updateTodoDto).exec();
     }
-    async remove(id) {
-        let data = await this.TodoModel.findByIdAndRemove(id);
-        if (!data) {
-            throw new Error("Todo is not found!");
-        }
-        return "Todo has been deleted!";
+    async delete(id) {
+        return await this.model.findByIdAndDelete(id).exec();
     }
 };
 TodoService = __decorate([
     common_1.Injectable(),
-    __param(0, mongoose_2.InjectModel('Todo')),
-    __metadata("design:paramtypes", [mongoose_1.Model])
+    __param(0, mongoose_1.InjectModel(todo_schema_1.Todo.name)),
+    __metadata("design:paramtypes", [mongoose_2.Model])
 ], TodoService);
 exports.TodoService = TodoService;
 //# sourceMappingURL=todo.service.js.map

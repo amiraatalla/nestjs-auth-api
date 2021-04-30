@@ -1,3 +1,3 @@
-import { Todo } from '../interfaces/todo.interface';
-export declare class CreateTodoDto extends Todo {
+import { BaseTodoDto } from "./base-todo.dto";
+export declare class CreateTodoDto extends BaseTodoDto {
 }
