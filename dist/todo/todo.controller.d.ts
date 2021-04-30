@@ -1,12 +1,12 @@
-import { TodoService } from './todo.service';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
+import { TodoService } from './todo.service';
 export declare class TodoController {
-    private readonly todoService;
-    constructor(todoService: TodoService);
-    create(res: any, createTodoDto: CreateTodoDto): Promise<Response>;
-    findAll(res: any): Promise<Response>;
-    findOne(res: any, id: string): Promise<Response>;
-    update(res: any, id: string, updateTodoDto: UpdateTodoDto): Promise<Response>;
-    remove(res: any, id: string): Promise<Response>;
+    private readonly service;
+    constructor(service: TodoService);
+    index(): Promise<import("./schemas/todo.schema").Todo[]>;
+    find(id: string): Promise<import("./schemas/todo.schema").Todo>;
+    create(createTodoDto: CreateTodoDto): Promise<import("./schemas/todo.schema").Todo>;
+    update(id: string, updateTodoDto: UpdateTodoDto): Promise<import("./schemas/todo.schema").Todo>;
+    delete(id: string): Promise<import("./schemas/todo.schema").Todo>;
 }

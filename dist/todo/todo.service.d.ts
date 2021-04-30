@@ -1,14 +1,13 @@
+import { Model } from 'mongoose';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
-import { Model } from 'mongoose';
-import { Todo } from './entities/todo.entity';
-import { TodoTransformer } from './transformers/todo.transformer';
+import { Todo, TodoDocument } from './schemas/todo.schema';
 export declare class TodoService {
-    private TodoModel;
-    constructor(TodoModel: Model<any, Todo>);
-    create(createTodoDto: CreateTodoDto): Promise<TodoTransformer>;
-    findAll(): Promise<TodoTransformer>;
-    findOne(id: string): Promise<TodoTransformer>;
-    update(id: string, updateTodoDto: UpdateTodoDto): Promise<TodoTransformer>;
-    remove(id: string): Promise<String>;
+    private readonly model;
+    constructor(model: Model<TodoDocument>);
+    findAll(): Promise<Todo[]>;
+    findOne(id: string): Promise<Todo>;
+    create(createTodoDto: CreateTodoDto): Promise<Todo>;
+    update(id: string, updateTodoDto: UpdateTodoDto): Promise<Todo>;
+    delete(id: string): Promise<Todo>;
 }

@@ -16,9 +16,11 @@ let TodoModule = class TodoModule {
 };
 TodoModule = __decorate([
     common_1.Module({
-        imports: [mongoose_1.MongooseModule.forFeature([{ name: 'Todo', schema: todo_schema_1.TodoSchema }])],
+        providers: [todo_service_1.TodoService],
         controllers: [todo_controller_1.TodoController],
-        providers: [todo_service_1.TodoService]
+        imports: [
+            mongoose_1.MongooseModule.forFeature([{ name: todo_schema_1.Todo.name, schema: todo_schema_1.TodoSchema }]),
+        ],
     })
 ], TodoModule);
 exports.TodoModule = TodoModule;

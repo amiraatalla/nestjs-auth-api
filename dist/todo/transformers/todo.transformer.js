@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TodoTransformer = void 0;
-const transformer_base_1 = require("../../transformer.base");
+const transformer_base_1 = require("src/transformer.base");
 class TodoTransformer extends transformer_base_1.BaseTransformer {
     static singleTransform(element) {
         var _a;
